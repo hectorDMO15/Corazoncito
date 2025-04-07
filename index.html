@@ -1,26 +1,164 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Corazon Vibrante</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corazón para Antonella</title>
+
+<!-- Fuente Pacifico -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden; /* Evitar el scroll */
+  position: relative;
+}
+
+.corazon {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  background: red;
+  transform: rotate(-45deg);
+  animation: latido 1s infinite;
+  box-shadow: 0 0 30px red;
+  margin-top: -20px;
+  z-index: 1; /* Colocar el corazón grande por encima */
+}
+
+.corazon::before,
+.corazon::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  background: red;
+  border-radius: 50%;
+}
+
+.corazon::before {
+  top: -90px;
+  left: 0;
+}
+
+.corazon::after {
+  left: 90px;
+  top: 0;
+}
+
+@keyframes latido {
+  0%, 100% {
+    transform: rotate(-45deg) scale(1);
+    box-shadow: 0 0 20px red;
+  }
+  50% {
+    transform: rotate(-45deg) scale(1.1);
+    box-shadow: 0 0 50px red;
+  }
+}
+
+.texto {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Pacifico', cursive;
+  font-size: 28px;
+  color: white;
+  display: flex;
+  flex-direction: column; /* Cambiar a columna */
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  flex-wrap: wrap;
+  z-index: 2; /* Colocar el texto por encima */
+}
+
+.texto span {
+  opacity: 0;
+  animation: escribir 0.5s forwards;
+  margin: 0 5px;
+}
+
+.texto .primera-linea {
+  display: flex;
+  justify-content: center; /* Asegurar que las palabras "para ti" estén centradas en la misma línea */
+}
+
+.texto .segunda-linea {
+  margin-top: 10px; /* Separar las dos líneas */
+}
+
+.texto span:nth-child(1) { animation-delay: 2s; }
+.texto span:nth-child(2) { animation-delay: 2.4s; }
+.texto span:nth-child(3) { animation-delay: 2.8s; }
+.texto span:nth-child(4) { animation-delay: 3.2s; }
+
+@keyframes escribir {
+  0% { opacity: 0; letter-spacing: -20px; filter: blur(5px); }
+  100% { opacity: 1; letter-spacing: 2px; filter: blur(0); }
+}
+
+/* Estilos para los corazones de fondo */
+.corazon-fondo {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  animation: caer 5s infinite;
+  z-index: 0; /* Colocar los corazones de fondo detrás */
+}
+
+@keyframes caer {
+  0% {
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    transform: translateX(-50%) translateY(100vh);
+  }
+}
+</style>
+
 </head>
 <body>
-    <div class="heart">
-        <p>
-            <span class="main-text">
-                Mi corazoncito late asi por ti preciosa 👑💗
-            </span>
-            <br>
-            <span class="special-font">
-                A & H
-            </span>
-        </p>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<div class="corazon"></div>
+<div class="texto">
+  <div class="primera-linea">
+    <span>Para</span>
+    <span>ti</span>
+    <span>mi</span>
+  </div>
+  <div class="segunda-linea">
+    <span>Antonelita</span>
+  </div>
+</div>
+
+<script>
+function crearCorazonFondo() {
+  const corazon = document.createElement('div');
+  corazon.className = 'corazon-fondo';
+  corazon.textContent = '❤';
+  corazon.style.color = ['red', 'pink', 'purple', 'orange', 'blue', 'yellow'][Math.floor(Math.random() * 5)];
+  corazon.style.left = Math.random() * 100 + 'vw'; // Posición horizontal aleatoria
+  document.body.appendChild(corazon);
+
+  // Eliminar el corazón después de 5 segundos
+  setTimeout(() => {
+    corazon.remove();
+  }, 5000);
+}
+
+setInterval(crearCorazonFondo, 500); // Crear un corazón cada 500 ms
+</script>
+
 </body>
 </html>
